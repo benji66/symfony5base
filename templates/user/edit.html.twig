@@ -1,0 +1,96 @@
+{% extends '@FgimenezAdminlte/layout.admin.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+     <h1>Edit User</h1>
+
+
+		<div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Edit</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->            
+                <div class="card-body">
+                       {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+                <!-- /.card-body -->               
+             
+            </div>
+            <!-- /.card -->
+
+          
+
+            <a href="{{ path('user_index') }}">
+            	<i class="fas fa-arrow-left"></i>
+            	back to list            	
+            </a>
+
+             {{ include('user/_delete_form.html.twig') }}
+		 </div>
+		</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+   <link rel="stylesheet" href="/bundles/fgimenezadminlte/custom/vakata-jstree/themes/default/style.min.css" />
+
+       <!-- Select2 -->
+  <link rel="stylesheet" href="/bundles/fgimenezadminlte/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="/bundles/fgimenezadminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<script src="/bundles/fgimenezadminlte/custom/vakata-jstree/jstree.min.js"></script>
+<script>
+$('#arbol')
+   .on("changed.jstree", function (e, data) {
+          if(data.selected.length) {
+            //alert('The selected node is: ' + data.instance.get_node(data.selected[0]).text);
+            var dependencia_id =data.instance.get_node(data.selected[0]).id;
+            if(!$("#dependencia_id_"+dependencia_id).val()){
+
+                $("#dependencia_padre_texto").html(data.instance.get_node(data.selected[0]).text);
+                $("#dependencia_padre").val(dependencia_id);
+            }
+          }
+        })
+    .jstree({
+        'core' : {
+          'data' : {
+            "url" : "{{ path('dependencia_arbol') }}",
+            "data" : function (node) {
+              return { "id" : node.id };
+            }
+          }
+        }
+      });
+
+$("#dependencia_padre_texto").html('{{ user.perfil.dependencia.titulo | default(null)}}');
+$("#dependencia_padre").val('{{ user.perfil.dependencia.id  |default(null)}}'); 
+
+</script>
+
+ <!-- Select2 -->
+  <script src="/bundles/fgimenezadminlte/plugins/select2/js/select2.full.min.js"></script>
+
+
+  <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+
+
+  })
+</script>
+{% endblock %}
