@@ -39,17 +39,6 @@ class Perfil
      */
     use TimestampableEntity;
 
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-
-    /**
-     * Hook SoftDeleteable behavior
-     * updates deletedAt field
-     */
-    use SoftDeleteableEntity;
 
     /**
      * @ORM\Id()

@@ -18,8 +18,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+
 
 /**
  * @ApiResource()
@@ -43,17 +42,6 @@ class User implements UserInterface
      */
     use TimestampableEntity;
 
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-
-    /**
-     * Hook SoftDeleteable behavior
-     * updates deletedAt field
-     */
-    use SoftDeleteableEntity;
     
     /**
      * @ORM\Id()
