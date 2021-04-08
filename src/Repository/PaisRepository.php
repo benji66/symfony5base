@@ -47,4 +47,67 @@ class PaisRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function buscarPorNombre($value)
+    {
+        
+        /* 
+
+        select p1.nombre, p1.poblacion, 
+        ((p1.poblacion/(select SUM(p2.poblacion) as total from pais p2 where p2.nombre like '%dia%' ))*100) as porcentaje
+         from pais p1 
+         where p1.nombre like '%dia%' 
+
+         order by nombre ASC 
+        */
+        /* $sub = $this->createQueryBuilder('p2')
+        ->select( '(SUM(p2.poblacion)) as totalPoblacion' )
+           // ->andWhere('p2.nombre like :val')
+           // ->setParameter('val', '%'.$value.'%')
+           ->getQuery()                    
+            ->getOneOrNullResult()
+        ;*/
+
+        $sub = $this->totalPorNombre($value);
+        $total = $sub['totalPoblacion'];
+
+        $qb=  $this->createQueryBuilder('p')
+        ->select( 'p.nombre', 'p.poblacion' )
+        ->addSelect(sprintf(
+                '((p.poblacion/(%1s))*100) AS %2s',
+                //$sub->getQuery()->getDQL(),
+                $total,
+                'porcentaje'
+            ))
+
+            ->andWhere('p.nombre like :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->orderBy('p.nombre', 'ASC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getArrayResult()        
+        ;
+
+        return $qb;       
+
+
+    }
+
+    public function totalPorNombre($value)
+    {
+        return $this->createQueryBuilder('p')
+        ->select( 'SUM(p.poblacion) as totalPoblacion' )
+           // ->andWhere('p.nombre like :val')
+            //->setParameter('val', '%'.$value.'%')                    
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+
+
+
+
+    
 }

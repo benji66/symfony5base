@@ -18,8 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+
 
 /**
  * @ApiResource(normalizationContext={"groups"={"read"}})

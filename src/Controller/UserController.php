@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-use App\Repository\DependenciaRepository;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -86,7 +86,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request,  UserPasswordEncoderInterface $passwordEncoder,  DependenciaRepository $dependenciaRepository): Response
+    public function new(Request $request,  UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -96,8 +96,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-             $dependencia = $dependenciaRepository->find($request->get("dependencia_padre"));    
-            $user->getPerfil()->setDependencia($dependencia);
+           
 
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -134,7 +133,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, DependenciaRepository $dependenciaRepository): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
 
       
@@ -148,10 +147,7 @@ class UserController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
   
-           if($request->get("dependencia_padre")){ 
-                $dependencia = $dependenciaRepository->find($request->get("dependencia_padre"));    
-                $user->getPerfil()->setDependencia($dependencia);
-            }
+          
           //set user password old
 
             if(!$user->getPassword()){
@@ -161,8 +157,7 @@ class UserController extends AbstractController
                $user->setPassword($password);
             }
 
-            /*echo 'data '.$form->getData()->getPassword().'---'.$user->getPassword().'//'.$user->getPerfil()->getNombre().'//'.$form->getData()->getPerfil()->getNombre();*/
-        
+               
             $this->getDoctrine()->getManager()->flush();
 
 

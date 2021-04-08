@@ -38,16 +38,14 @@ exit;*/
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
                     'ROLE_GERENCIA' => 'ROLE_GERENCIA',
                     'ROLE_COORDINADOR' => 'ROLE_COORDINADOR',
-                    'ROLE_SUPERVISOR' => 'ROLE_SUPERVISOR',
-                    'ROLE_ENCUESTADOR' => 'ROLE_ENCUESTADOR',
-                    'ROLE_TRANSCRIPTOR' => 'ROLE_TRANSCRIPTOR',
+
 
                    
                 ],
             ])
             ->add('password', RepeatedType::class, array(
                 'required' => false, 
-                'empty_data' => 'ggg',
+                'empty_data' => '',
 
                 'data' =>  '#0000FF',
       
@@ -65,14 +63,7 @@ exit;*/
             'data_class' => User::class,
             'validation_groups' => function (FormInterface $form) {
                     $data = $form->getData();  
-                    /*echo '<pre>';
-                    var_dump($data);
-                    echo '</pre>';
-
-                    if ($data->getId() ) {
-                        echo 'edit';
-                    }
-                    exit;*/                            
+                                     
 
                     if ($data->getId()) {
                         return ['edit'];

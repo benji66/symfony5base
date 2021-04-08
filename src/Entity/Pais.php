@@ -11,6 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ApiResource()
  * @Gedmo\Loggable 
@@ -36,8 +39,14 @@ class Pais
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "El valor debe contener minimo {{ limit }} caracteres",
+     *      maxMessage = "El valor no debe superar los {{ limit }} caracteres"
+     * )
+     *  
      * @Gedmo\Versioned   
      * @ORM\Column(type="string", length=255)
      */
