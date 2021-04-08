@@ -22,37 +22,12 @@ class PaisRepository extends ServiceEntityRepository
     // /**
     //  * @return Pais[] Returns an array of Pais objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Pais
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 
     public function buscarPorNombre($value)
     {
         
         /* 
-
         select p1.nombre, p1.poblacion, 
         ((p1.poblacion/(select SUM(p2.poblacion) as total from pais p2 where p2.nombre like '%dia%' ))*100) as porcentaje
          from pais p1 
@@ -60,13 +35,6 @@ class PaisRepository extends ServiceEntityRepository
 
          order by nombre ASC 
         */
-        /* $sub = $this->createQueryBuilder('p2')
-        ->select( '(SUM(p2.poblacion)) as totalPoblacion' )
-           // ->andWhere('p2.nombre like :val')
-           // ->setParameter('val', '%'.$value.'%')
-           ->getQuery()                    
-            ->getOneOrNullResult()
-        ;*/
 
         $sub = $this->totalPorNombre($value);
         $total = $sub['totalPoblacion'];
@@ -88,9 +56,7 @@ class PaisRepository extends ServiceEntityRepository
             ->getArrayResult()        
         ;
 
-        return $qb;       
-
-
+        return $qb; 
     }
 
     public function totalPorNombre($value)
