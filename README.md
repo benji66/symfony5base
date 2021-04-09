@@ -119,12 +119,11 @@ php bin/console doctrine:fixtures:load
 
 ##### Usuario de acceso 
 
-Si bien 
+El acceso a la prueba se encuentra libre, pero el login y password para los crud son los siguientes:
 
 ~~~
-//src/DataFixtures
-
-php bin/console doctrine:fixtures:load
+username: admin@admin.com
+password: admin
 ~~~
 
 ## Puntos adicionales
@@ -133,13 +132,4 @@ php bin/console doctrine:fixtures:load
 - Se configuran algunos componentes para los behavior y trazas
 - Se configura JWT para el uso de generacion de tokens en caso de ser necesario. Se puede comprobar por postman por la ruta /api/login_check pasandole los parametros username y password en el body via post. 
 
-El acceso a prueba W3 se encuentra libre, pero el login y password para los crud son los siguientes:
 
-~~~
-username: admin@admin.com
-password: admin
-~~~
-
-## Puntos faltantes
-- Uso de docker
-- Test Unitarios
